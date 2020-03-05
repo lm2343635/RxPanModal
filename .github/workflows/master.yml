@@ -1,0 +1,19 @@
+name: master
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: pod install --project-directory=Example --repo-update
+    - name: Run tests
+      run: set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/RxPanModal.xcworkspace -scheme RxPanModal-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
