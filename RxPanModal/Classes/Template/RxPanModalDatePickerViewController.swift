@@ -56,30 +56,14 @@ public struct RxPanModalDatePickerItem: RxPanModalItem {
     
     public typealias DidSelectItem = (Date) -> Void
     
-    public enum Theme {
-        case dark
-        case light
-        case custom(Custom)
-        
-        public struct Custom {
-            var backgroundColor: UIColor?
-            var doneColor: UIColor?
-            var titleColor: UIColor?
-            var pickerSeperatorColor: UIColor?
-            var pickerTitleAttributes: [NSAttributedString.Key: Any]
-            var blurEffect: UIBlurEffect
-            var blurAlpha: CGFloat
-        }
-    }
-    
-    let theme: Theme
+    let theme: RxPanModalPickerTheme
     let title: String
     let done: String
     let didSelectItemAt: DidSelectItem?
     let doneAt: DidSelectItem?
     
     public init(
-        theme: Theme = .dark,
+        theme: RxPanModalPickerTheme = .dark,
         title: String,
         done: String,
         didSelectItemAt: DidSelectItem? = nil,
@@ -318,89 +302,6 @@ extension RxPanModalDatePickerViewController: RxPanModalPresentable {
     
     public var showDragIndicator: Bool {
         return false
-    }
-    
-}
-
-extension RxPanModalDatePickerItem.Theme {
-    
-    var backgroundColor: UIColor? {
-        switch self {
-        case .dark:
-            return .clear
-        case .light:
-            return .clear //IColor(hexa: 0xffffff22)
-        case .custom(let custom):
-            return custom.backgroundColor
-        }
-    }
-    
-    var doneColor: UIColor? {
-        switch self {
-        case .dark:
-            return UIColor(hex: 0x0091d4)
-        case .light:
-            return UIColor(hex: 0x367bf7)
-        case .custom(let custom):
-            return custom.doneColor
-        }
-    }
-    
-    var titleColor: UIColor? {
-        switch self {
-        case .dark:
-            return .white
-        case .light:
-            return .darkText
-        case .custom(let custom):
-            return custom.titleColor
-        }
-    }
-    
-    var pickerSeperatorColor: UIColor? {
-        switch self {
-        case .dark:
-            return UIColor(hex: 0xfcfcfc)
-        case .light:
-            return UIColor(hex: 0xa2a8af)
-        case .custom(let custom):
-            return custom.pickerSeperatorColor
-        }
-    }
-    
-    var pickerTitleAttributes: [NSAttributedString.Key: Any] {
-        switch self {
-        case .dark:
-            return [
-                .foregroundColor: UIColor.white
-            ]
-        case .light:
-            return [
-                .foregroundColor: UIColor.darkText
-            ]
-        case .custom(let custom):
-            return custom.pickerTitleAttributes
-        }
-    }
-    
-    var blurEffect: UIBlurEffect {
-        switch self {
-        case .dark:
-            return UIBlurEffect(style: .dark)
-        case .light:
-            return UIBlurEffect(style: .extraLight)
-        case .custom(let custom):
-            return custom.blurEffect
-        }
-    }
-    
-    var blurAlpha: CGFloat {
-        switch self {
-        case .dark, .light:
-            return 0.95
-        case .custom(let custom):
-            return custom.blurAlpha
-        }
     }
     
 }
