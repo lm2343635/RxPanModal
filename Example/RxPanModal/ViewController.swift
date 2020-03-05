@@ -46,6 +46,16 @@ class ViewController: UIViewController, RxPanModalShowable {
         return button
     }()
     
+    private lazy var datePickerButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Open Date Picker", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.rx.tap.bind { [unowned self] in
+            self.viewModel.openDatePicker()
+        }.disposed(by: disposeBag)
+        return button
+    }()
+    
     private let disposeBag = DisposeBag()
     private let viewModel: ViewModel
     
@@ -66,6 +76,7 @@ class ViewController: UIViewController, RxPanModalShowable {
         view.addSubview(modalButton)
         view.addSubview(nameLabel)
         view.addSubview(pickerButton)
+        view.addSubview(datePickerButton)
         createConstraints()
         
         viewModel.panModal.bind(to: rx.panModal).disposed(by: disposeBag)
@@ -92,6 +103,11 @@ class ViewController: UIViewController, RxPanModalShowable {
         pickerButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(nameLabel.snp.bottom).offset(20)
+        }
+        
+        datePickerButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(pickerButton.snp.bottom).offset(20)
         }
         
     }

@@ -47,4 +47,20 @@ extension ObserverType where Element == RxPanModal {
         ))
     }
     
+    public func onNextDatePicker(
+        theme: RxPanModalDatePickerItem.Theme = .dark,
+        title: String,
+        done: String,
+        didSelectItemAt: RxPanModalDatePickerItem.DidSelectItem? = nil,
+        doneAt: RxPanModalDatePickerItem.DidSelectItem? = nil
+    ) {
+        onNext(item: RxPanModalDatePickerItem(
+            theme: theme,
+            title: title,
+            done: done,
+            didSelectItemAt: didSelectItemAt,
+            doneAt: doneAt
+        ))
+    }
+    
 }

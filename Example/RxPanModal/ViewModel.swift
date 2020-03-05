@@ -63,5 +63,17 @@ class ViewModel {
         )
     }
     
+    func openDatePicker() {
+        panModalSubject.onNextDatePicker(
+            theme: .dark,
+            title: "Date",
+            done: "Done",
+            didSelectItemAt: {
+                print("date: \($0)")
+            }, doneAt: {
+                print("date: \($0)")
+            }
+        )
+    }
+    
 }
-
