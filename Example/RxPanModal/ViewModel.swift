@@ -18,6 +18,7 @@ class ViewModel {
     private let panModalSubject = PublishSubject<RxPanModal>()
     private let nameSubject = PublishSubject<String?>()
     private let monthRelay = BehaviorRelay<Int>(value: 0)
+    private let dateRelay = PublishRelay<String>()
 
     private let disposeBag = DisposeBag()
 
@@ -28,16 +29,22 @@ class ViewModel {
     }
 
     var panModal: Observable<RxPanModal> {
-        return panModalSubject.asObservable()
+        panModalSubject.asObservable()
     }
     
     var name: Observable<String?> {
-        return nameSubject.asObservable()
+        nameSubject.asObservable()
     }
     
     var month: Observable<String?> {
-        return monthRelay.map {
+        monthRelay.map {
             "Open Picker: " + self.months[$0]
+        }
+    }
+    
+    var date: Observable<String?> {
+        dateRelay.map {
+            "Open Date Picker: " + $0
         }
     }
     
@@ -71,7 +78,7 @@ class ViewModel {
             didSelectItemAt: {
                 print("date: \($0)")
             }, doneAt: {
-                print("date: \($0)")
+                self.dateRelay.accept("\($0.year)-\($0.month)-\($0.day)")
             }
         )
     }

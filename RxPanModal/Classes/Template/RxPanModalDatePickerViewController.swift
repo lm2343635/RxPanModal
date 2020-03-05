@@ -47,9 +47,9 @@ private enum Const {
 public struct RxPanModalDatePickerItem: RxPanModalItem {
     
     public struct Date {
-        let year: Int
-        let month: Int
-        let day: Int
+        public let year: Int
+        public let month: Int
+        public let day: Int
     }
     
     public static let controllerType: RxPanModalPresentable.Type = RxPanModalDatePickerViewController.self
@@ -164,6 +164,18 @@ class RxPanModalDatePickerViewController: UIViewController {
         view.addSubview(doneButton)
         view.addSubview(pickerView)
         createConstraints()
+        
+        // Init date
+        let date = Date()
+        let calendar = Calendar.current
+        year = calendar.component(.year, from: date)
+        month = calendar.component(.month, from: date)
+        day = calendar.component(.day, from: date)
+        days = Array(1...daysCount(month: month, year: year))
+        pickerView.reloadAllComponents()
+        pickerView.selectRow(years.firstIndex(of: year) ?? 0, inComponent: 0, animated: false)
+        pickerView.selectRow(months.firstIndex(of: month) ?? 0, inComponent: 1, animated: false)
+        pickerView.selectRow(days.firstIndex(of: day) ?? 0, inComponent: 2, animated: false)
     }
     
     open override func viewDidLayoutSubviews() {
@@ -215,13 +227,7 @@ class RxPanModalDatePickerViewController: UIViewController {
     
     @objc private func done() {
         dismiss(animated: true)
-        item.doneAt?(
-            .init(
-                year: year,
-                month: month,
-                day: day
-            )
-        )
+        item.doneAt?(.init(year: year, month: month, day: day))
     }
     
     private func daysCount(month: Int, year: Int) -> Int {
@@ -257,7 +263,12 @@ extension RxPanModalDatePickerViewController: UIPickerViewDataSource {
     }
     
     public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        NSAttributedString(string: components[component][row].description, attributes: item.theme.pickerTitleAttributes)
+        let data = components[component][row]
+        var string = data.description
+        if data < 10 {
+            string = "0" + string
+        }
+        return NSAttributedString(string: string, attributes: item.theme.pickerTitleAttributes)
     }
     
 }
@@ -283,13 +294,7 @@ extension RxPanModalDatePickerViewController: UIPickerViewDelegate {
             break
         }
         
-        item.didSelectItemAt?(
-            .init(
-                year: year,
-                month: month,
-                day: day
-            )
-        )
+        item.didSelectItemAt?(.init(year: year, month: month, day: day))
     }
     
 }

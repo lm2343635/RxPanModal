@@ -82,6 +82,7 @@ class ViewController: UIViewController, RxPanModalShowable {
         viewModel.panModal.bind(to: rx.panModal).disposed(by: disposeBag)
         viewModel.name.bind(to: nameLabel.rx.text).disposed(by: disposeBag)
         viewModel.month.bind(to: pickerButton.rx.title()).disposed(by: disposeBag)
+        viewModel.date.bind(to: datePickerButton.rx.title()).disposed(by: disposeBag)
     }
     
     private func createConstraints() {
