@@ -208,15 +208,15 @@ open class RxPanModalPickerViewController: UIViewController {
 extension RxPanModalPickerViewController: UIPickerViewDataSource {
     
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        1
     }
     
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return item.models.count
+        item.models.count
     }
     
     public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: item.models[row].description, attributes: item.theme.pickerTitleAttributes)
+        NSAttributedString(string: item.models[row].description, attributes: item.theme.pickerTitleAttributes)
     }
     
 }

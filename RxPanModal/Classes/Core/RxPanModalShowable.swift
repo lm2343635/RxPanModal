@@ -46,7 +46,7 @@ extension RxPanModalShowable where Self: UIViewController {
 extension Reactive where Base: UIViewController, Base: RxPanModalShowable {
     
     public var panModal: Binder<RxPanModal> {
-        return Binder(base) { viewController, panModal in
+        Binder(base) { viewController, panModal in
             viewController.showPanModal(panModal)
         }
     }
